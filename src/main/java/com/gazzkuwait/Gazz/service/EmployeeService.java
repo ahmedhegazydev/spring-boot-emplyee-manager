@@ -1,11 +1,10 @@
 package com.gazzkuwait.Gazz.service;
 
 
-import com.gazzkuwait.Gazz.exceptions.UserNoFoundException;
+import com.gazzkuwait.Gazz.exception.UserNoFoundException;
 import com.gazzkuwait.Gazz.model.Employee;
 import com.gazzkuwait.Gazz.repo.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,7 +42,18 @@ public class EmployeeService {
 
 
     public void deleteEmployee(Long employeeId) {
-        employeeRepo.deleteEmployeeById(employeeId);
+
+        //employeeRepo.deleteEmployeeById(employeeId);
+
+        boolean exist =
+                employeeRepo.existsById(employeeId);
+        if (!exist){
+            throw new IllegalStateException(
+                    "The employee with " + employeeId +  " doesn't exists."
+            );
+        }else {
+            employeeRepo.deleteById(employeeId);
+        }
     }
 
 }

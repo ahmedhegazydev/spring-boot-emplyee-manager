@@ -1,4 +1,4 @@
-package com.gazzkuwait.Gazz.exceptions;
+package com.gazzkuwait.Gazz.exception;
 
 public class UserNoFoundException extends RuntimeException{
 

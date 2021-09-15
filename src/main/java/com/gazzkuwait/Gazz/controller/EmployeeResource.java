@@ -3,6 +3,7 @@ package com.gazzkuwait.Gazz.controller;
 
 import com.gazzkuwait.Gazz.model.Employee;
 import com.gazzkuwait.Gazz.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,14 +11,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+//@Controller
+@RestController
 @RequestMapping("/employee")
 public class EmployeeResource {
-
 
     private final EmployeeService employeeService;
 
 
+    @Autowired
     public EmployeeResource(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
@@ -76,8 +78,11 @@ public class EmployeeResource {
 //    @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id) {
         employeeService.deleteEmployee(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+//        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("The employee with " + id + " Deleted success", HttpStatus.OK);
     }
+
+
 
 
 }
