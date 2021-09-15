@@ -79,7 +79,8 @@ public class EmployeeResource {
     public ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id) {
         employeeService.deleteEmployee(id);
 //        return new ResponseEntity<>(HttpStatus.OK);
-        return new ResponseEntity<>("The employee with " + id + " Deleted success", HttpStatus.OK);
+//        return new ResponseEntity<>("The employee with " + id + " Deleted success", HttpStatus.OK);
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 
 
