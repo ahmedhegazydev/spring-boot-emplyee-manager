@@ -23,10 +23,16 @@ public class EmployeeResource {
     }
 
     //    @GetMapping /// or
-    @GetMapping("/all")
-    public ResponseEntity<List<Employee>> getAllEmployees() {
-        List<Employee> employeeList = employeeService.getAllEmployees();
-        return new ResponseEntity<>(employeeList, HttpStatus.OK);
+//    @GetMapping("/all")
+//    public ResponseEntity<List<Employee>> getAllEmployees() {
+//        List<Employee> employeeList = employeeService.getAllEmployees();
+//        return new ResponseEntity<>(employeeList, HttpStatus.OK);
+//    }
+    @GetMapping(path = "/all")
+    public @ResponseBody
+    Iterable<Employee> getAllEmployees() {
+        // This returns a JSON or XML with the users
+        return employeeService.getAllEmployees();
     }
 
 
@@ -43,6 +49,20 @@ public class EmployeeResource {
         return new ResponseEntity<>(employee1, HttpStatus.CREATED);
     }
 
+    @PostMapping(path = "/addReqParam") // Map ONLY POST Requests
+    public @ResponseBody
+    String addNewEmployee(
+            @RequestParam String name
+            , @RequestParam String email) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        Employee n = new Employee();
+        n.setName(name);
+        n.setEmail(email);
+        employeeService.addNewEmployee(n);
+        return "Saved";
+    }
+
 
     @PutMapping("/update")
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) {
@@ -51,13 +71,13 @@ public class EmployeeResource {
     }
 
 
-    @DeleteMapping("/delete/{id}")
+//    @DeleteMapping("/deleteEmp/{id}")
+    @DeleteMapping(value = "/delete/{id}")
+//    @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id) {
         employeeService.deleteEmployee(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 
 
 }
